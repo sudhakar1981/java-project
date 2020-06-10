@@ -1,0 +1,124 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>HDFCBANK</groupId>
+  <artifactId>CARLOAN</artifactId>
+  <packaging>war</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>CARLOAN Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  
+  <dependencies>
+    <!-- https://mvnrepository.com/artifact/junit/junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13</version>
+			<scope>test</scope>
+		</dependency>
+  </dependencies>
+
+  
+    <build>
+     <plugins>
+	    <plugin>
+		    <groupId>org.codehaus.mojo</groupId>
+			<artifactId>tomcat-maven-plugin</artifactId>
+
+			<configuration>
+			    <url>http://localhost:8088/manager/text</url>
+				<server>TomcatServer</server>
+				<path>/carloan</path>
+			</configuration>
+		</plugin>
+	</plugins>
+</build>
+
+
+<profiles>
+	<profile>
+		<id>DEV</id>
+        <build>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<version>1.1</version>
+					<executions>
+						<execution>
+							<phase>test</phase>
+							<goals>
+								<goal>run</goal>
+							</goals>
+							<configuration>
+								<tasks>
+									<echo>Using env.dev.properties</echo>
+									<echo>${project.build.outputDirectory}</echo>
+									<copy file="src/main/resources/env.DEV.properties" tofile="${project.build.outputDirectory}/env.properties" overwrite="true"/>
+								</tasks>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</build>
+	</profile>
+	
+		<profile>
+		<id>QA</id>
+        <build>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<version>1.1</version>
+					<executions>
+						<execution>
+							<phase>test</phase>
+							<goals>
+								<goal>run</goal>
+							</goals>
+							<configuration>
+								<tasks>
+									<echo>Using env.QA.properties</echo>
+									<echo>${project.build.outputDirectory}</echo>
+									<copy file="src/main/resources/env.QA.properties" tofile="${project.build.outputDirectory}/env.properties" overwrite="true"/>
+								</tasks>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</build>
+	</profile>
+	
+		<profile>
+		<id>PROD</id>
+        <build>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<version>1.1</version>
+					<executions>
+						<execution>
+							<phase>test</phase>
+							<goals>
+								<goal>run</goal>
+							</goals>
+							<configuration>
+								<tasks>
+									<echo>Using env.PROD.properties</echo>
+									<echo>${project.build.outputDirectory}</echo>
+									<copy file="src/main/resources/env.PROD.properties" tofile="${project.build.outputDirectory}/env.properties" overwrite="true"/>
+								</tasks>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</build>
+	</profile>
+  </profiles>
+  
+</project>
